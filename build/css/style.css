@@ -1,0 +1,63 @@
+
+
+/* LOGIN AND REGISTER PAGE */
+
+.login_content{
+
+margin: 0 auto;
+    padding: 25px;
+    position: relative;
+    text-align: center;
+    text-shadow: 0 1px 0 #fff;
+    min-width: 280px;
+	
+	background: #fff;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.12);
+    border-radius: 0px;
+               }
+			   
+			
+ .login {
+    background: #F7F7F7;
+    background: url(../images/bg.jpg) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+	
+        }
+	
+ input.loginbtn {
+		background:#fab81c;
+		color:#fff;
+		border-color: #ff8a12;
+	    }
+		
+		
+		
+		
+/* PANEL HEADER  */
+
+
+
+img.sidebar_logo
+  {
+    width: 80%;
+ /* height: 50%; */
+    padding-left: 15px;
+	
+	
+	
+/* IMAGE MANAGER */
+
+.img-thumbnail {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    padding: 4px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
