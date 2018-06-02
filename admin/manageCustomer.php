@@ -192,8 +192,12 @@
             var c = url.searchParams.get("id");
 			if(c!=""&&c!=null)
 			{
-				
+				 var base_url="http://"+window.location.hostname+"/lqapp";
+		var link = base_url+'/admin/manageOrders.php?id='+c;
+		$('.orderlink').attr('href',link);
+		console.log(link);
 			 $('#info_modal').modal({show:true});
+			
 			}
             console.log(c);
 			

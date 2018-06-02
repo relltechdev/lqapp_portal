@@ -5,7 +5,7 @@ require("../../common/config.php");
 $json=array();
 
 
-if (!empty($_POST['banner_name'])&&!empty($_POST["image"])&&!empty($_POST["status"])&&!empty($_POST["bannerid"]))  {
+if (!empty($_POST['banner_name'])&&!empty($_POST["image"])&&isset($_POST["status"])&&!empty($_POST["bannerid"]))  {
   	
 	
 	
