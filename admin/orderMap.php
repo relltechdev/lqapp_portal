@@ -43,26 +43,47 @@
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-md-12">
+			
+			
+			 <!-- tab panel starts -->
+              <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Transaction Summary <small>Weekly progress</small></h2>
-                    <div class="filter">
+                    <h2> <small>Analytics and Metrics</small></h2>
+                   <div class="filter">
                      <div id="daterange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                       <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                       <span>January 01, 2018 - December 31, 2019</span> <b class="caret"></b>
+					  <input type="hidden" id="sdate" />
+					   <input type="hidden" id="edate" />
                     </div>
                     </div>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-					   <div class="chart-container">
-                       <canvas id="salesChart" width="400" height="auto"></canvas>
-                    </div>
+
+                    <!-- tab panel begins-->
+                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                      <ul id="analyticsTab" class="nav nav-tabs bar_tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#tab_content1" id="first-tab" role="tab" data-toggle="tab" aria-expanded="true">Revenue</a>
+                        </li>
+                        <li role="presentation" class=""><a href="#tab_content2" role="tab" id="second-tab" data-toggle="tab" aria-expanded="false">Delivered Order</a>
+                        </li>
+						 <li role="presentation" class=""><a href="#tab_content3" role="tab" id="third-tab" data-toggle="tab" aria-expanded="false">Revenue Loss</a>
+                        </li>
+						 <li role="presentation" class=""><a href="#tab_content4" role="tab" id="fourth-tab" data-toggle="tab" aria-expanded="false">Cancelled Orders</a>
+                        </li>
+                      </ul>
+                      <div id="analyticsTabContent" class="tab-content">
 					  
-                      <div class="tiles">
+                     <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="first-tab">
+                          
+					 <div class="col-md-12 col-sm-12 col-xs-12">
+					   <div class="chart-container">
+                       <canvas id="Chart1" width="400" height="auto"></canvas>
+                       </div>
+					  
+                        <div class="tiles">
                         <div class="col-md-4 tile">
                           <span>Expected Revenue</span>
                           <h2>231,809</h2>
@@ -86,14 +107,139 @@
                         </div>
                       </div>
 
-                    </div>
+                      </div>
+						  
+                       </div>
+						<!-- tab 2 content-->
+                      <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="second-tab">
+                          
+				       <div class="col-md-12 col-sm-12 col-xs-12">
+					   <div class="chart-container">
+                       <canvas id="Chart2" width="400" height="auto"></canvas>
+                       </div>
+					  
+                        <div class="tiles">
+                        <div class="col-md-4 tile">
+                          <span>Expected Revenue</span>
+                          <h2>231,809</h2>
+                          <span class="sparkline11 graph" style="height: 160px;">
+                               <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                          </span>
+                        </div>
+                        <div class="col-md-4 tile">
+                          <span>Total Loss</span>
+                          <h2>$231,809</h2>
+                          <span class="sparkline22 graph" style="height: 160px;">
+                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                          </span>
+                        </div>
+                        <div class="col-md-4 tile">
+                          <span>Total Revenue</span>
+                          <h2>231,809</h2>
+                          <span class="sparkline11 graph" style="height: 160px;">
+                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                          </span>
+                        </div>
+                      </div>
 
-                    
+                      </div>
+						  
+                      </div>
+                        
+						<!-- tab 3 content -->
+						
+                      <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="third-tab">
+                          
+						 <div class="col-md-12 col-sm-12 col-xs-12">
+					   <div class="chart-container">
+                       <canvas id="Chart3" width="400" height="auto"></canvas>
+                       </div>
+					  
+                        <div class="tiles">
+                        <div class="col-md-4 tile">
+                          <span>Expected Revenue</span>
+                          <h2>231,809</h2>
+                          <span class="sparkline11 graph" style="height: 160px;">
+                               <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                          </span>
+                        </div>
+                        <div class="col-md-4 tile">
+                          <span>Total Loss</span>
+                          <h2>$231,809</h2>
+                          <span class="sparkline22 graph" style="height: 160px;">
+                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                          </span>
+                        </div>
+                        <div class="col-md-4 tile">
+                          <span>Total Revenue</span>
+                          <h2>231,809</h2>
+                          <span class="sparkline11 graph" style="height: 160px;">
+                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                          </span>
+                        </div>
+                      </div>
+
+                      </div>
+						  
+                       </div>
+						<!-- tab 4 content -->
+                      <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="fourth-tab">
+                          
+				       <div class="col-md-12 col-sm-12 col-xs-12">
+					   <div class="chart-container">
+                       <canvas id="Chart4" width="400" height="auto"></canvas>
+                       </div>
+					  
+                        <div class="tiles">
+                        <div class="col-md-4 tile">
+                          <span>Expected Revenue</span>
+                          <h2>231,809</h2>
+                          <span class="sparkline11 graph" style="height: 160px;">
+                               <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                          </span>
+                        </div>
+                        <div class="col-md-4 tile">
+                          <span>Total Loss</span>
+                          <h2>$231,809</h2>
+                          <span class="sparkline22 graph" style="height: 160px;">
+                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                          </span>
+                        </div>
+                        <div class="col-md-4 tile">
+                          <span>Total Revenue</span>
+                          <h2>231,809</h2>
+                          <span class="sparkline11 graph" style="height: 160px;">
+                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                          </span>
+                        </div>
+                      </div>
+
+                      </div>
+						  
+                      </div>
+					  
+					  
+					  </div>
+                    </div>
+					 <!-- tab panel ends-->
 
                   </div>
                 </div>
               </div>
-            </div>
+			  <!-- tab panel end -->
+			  
+			  
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
 
 
@@ -201,12 +347,15 @@ function daterangepicker_init() {
 			  timePickerIncrement: 1,
 			  timePicker12Hour: true,
 			  ranges: {
-				'Today': [moment(), moment()],
-				'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+				//'Today': [moment(), moment()],
+				//'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
 				'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-				'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+				//'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+				'This week': [moment().startOf('week'), moment()],
 				'This Month': [moment().startOf('month'), moment().endOf('month')],
-				'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+				'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+				'This Year': [moment().startOf('year'), moment().endOf('year')]
+				
 			  },
 			  opens: 'left',
 			  buttonClasses: ['btn btn-default'],
@@ -242,7 +391,7 @@ function daterangepicker_init() {
 			$('#sdate').val(sdate);
 			$('#edate').val(edate);
 			url= '?edate='+edate+'&sdate='+sdate; 
-			window.location.href=url;
+			//window.location.href=url;
 			});
 			$('#daterange').on('cancel.daterangepicker', function(ev, picker) {
 			  window.location.href='manageOrders.php';
@@ -261,29 +410,34 @@ function daterangepicker_init() {
    
 		}
 		
-		
-		// Chart
-		
-		
-var ctx = document.getElementById("salesChart");
-  ctx.height = 180;
-var myChart = new Chart(ctx, {
+
+		// SYnc data
+	var datai,config;
+    var data1=[],data2=[];
+	datai=0;	
+    var ctx = document.getElementById("Chart1"); // get canvas
+    ctx.height = 180; 
+    var chart;
+  
+  
+  var  config = {
+
     type: 'line',
-    data: {
-				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+     data: {
+				labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
 				datasets: [{
-					label: 'Orders handled',
+					label: 'This Week',
 					backgroundColor: "#98dd1e",
 					borderColor: "green",
-					data: [2,6,7,8,2,5,6],
+					data: [0,0,0,0,0,0],
 					
 					fill: false,
 				}, {
-					label: 'Orders failed',
+					label: 'Last Week',
 					fill: false,
 					backgroundColor: "#f9d4d4",
 					borderColor: "red",
-				data: [ 3,9,4,6,1,3,1 ],
+			    	data: [0,0,0,0,0,0],
 					
 				}]
 			},
@@ -338,7 +492,128 @@ var myChart = new Chart(ctx, {
 					}]
 				}
 			}
-		});
+		};	
+		
+		if(typeof chart != 'undefined')      {
+	
+	    chart.destroy();
+	                                         }
+  
+      chart = new Chart(ctx,config);
+
+	
+  
+   function syncdata(){
+// ajax data sync
+	$.ajax({
+    url: 'functions/ajaxOrderStatistics.php',
+    type: 'get',
+	data: '',                                       //$('#chartform').serializeArray()
+    dataType:'json',
+    
+    
+   
+    
+    success: function(json) {
+		
+		
+	
+   	       if(json['status']!='success') {
+		   
+		  new PNotify({
+                                  title: 'SARDIUS WEB PORTAL',
+                                  text: json['error'],
+                                  type: 'error',
+                                  styling: 'bootstrap3',
+                   animate: {
+               animate: true,
+              in_class: 'bounceInLeft',
+              out_class: 'zoomOut'
+                         }
+                              });
+		   
+		                                 }
+    else {
+	// reset and set chart data if not empty
+	
+	     json["count1"].forEach(function(packet) {
+         data1.push(packet);
+		                                         });
+		json["count2"].forEach(function(packet) {
+        data2.push(packet);
+	                                             });
+ 
+  
+    console.log(json['count1'][1]);
+     
+    datai = {                                  
+
+	labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],   
+	datasets :[
+
+              ]
+
+             };
+
+
+// pushing data 
+
+  datai.datasets.push({
+
+		label : json['label1'],
+		fill:false,
+		backgroundColor: "#98dd1e",
+		borderColor: "green",
+		data : data1	
+                     });	
+
+  datai.datasets.push ({
+
+		label : json['label2'],
+		fill: false,
+		backgroundColor: "#f9d4d4",
+		borderColor: "red",
+		data : data2	
+                     });
+  
+   
+   console.log(datai.datasets[1].label);
+  
+      updateChart();
+   }
+       
+	
+		
+		
+ 
+ 		
+
+	
+  },
+    //error handler
+    error: function(xhr, ajaxOptions, thrownError) {
+      console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      
+    }
+  });	
+	
+return true;
+   }	
+	
+	function updateChart()
+  {
+	       console.log("update");
+	      // chart.data.datasets[0].data=data1;
+		  // chart.data.datasets[1].data=data2;
+		   chart.data=datai;
+           chart.update();
+	  
+  }
+	
+	syncdata();   // sync order data
+        
+	
+	
 </script>
 		
 		
