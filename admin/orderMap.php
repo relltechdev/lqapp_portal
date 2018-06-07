@@ -418,11 +418,13 @@ function daterangepicker_init() {
     var ctx = document.getElementById("Chart1"); // get canvas
     ctx.height = 180; 
     var chart;
-  
+    var footerLine1=[0,0,0,0,0,0];
+	var footerLine2=[0,0,0,0,0,0];
   
   var  config = {
 
     type: 'line',
+	pointStyle:'cross',
      data: {
 				labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
 				datasets: [{
@@ -434,6 +436,7 @@ function daterangepicker_init() {
 					fill: false,
 				}, {
 					label: 'Last Week',
+					pointStyle:'cross',
 					fill: false,
 					backgroundColor: "#f9d4d4",
 					borderColor: "red",
@@ -454,11 +457,35 @@ function daterangepicker_init() {
 					display: true,
 					text: 'LQ Sales Report'
 				},
-				tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
+	
+	tooltips: {
+                enabled: true,
+                mode: 'index',
+                intersect: true,
+				callbacks:  {
+                afterFooter: function(tooltipItems, data) { 
+				console.log(tooltipItems[0]);
+				
+				
+				if (tooltipItems[0].datasetIndex === 0) {
+					
+					 return 'This Week : ' + footerLine1[tooltipItems[0].index];
+				}
+				else if (tooltipItems[0].datasetIndex === 1)
+			    {
+											  
+					 return 'Last Week: ' + footerLine2[tooltipItems[0].index];		  
+											  
+			    }
+			 							   
+													   },
+	           												   
+				  footer:function(tooltipItems,data) {
+                     return 'Last Week: ' + footerLine2[tooltipItems[0].index];		
+				                                        }				  
+	                         }
+	                         },
+			hover: {
 					mode: 'nearest',
 					intersect: true
 				},
@@ -575,7 +602,10 @@ function daterangepicker_init() {
 		borderColor: "red",
 		data : data2	
                      });
+  //config.tooltips.label=  json['date1'];
   
+  footerLine1=json['date1'];
+  footerLine2=json['date2'];
    
    console.log(datai.datasets[1].label);
   

@@ -6,6 +6,8 @@ include("../../common/config.php");
   $daycheck=date("D",strtotime(date('Y-m-d')));
   $sdate="";
   $edate="";
+  // checking week
+  
   if($daycheck!="Mon")
   {
   $sdate=date('Y-m-d', strtotime('previous monday', strtotime($daycheck)));
@@ -80,14 +82,34 @@ include("../../common/config.php");
 	  
 	  $tpsdate=$psdate;
 	  $tpedate=$pedate;
-  
+  $json['label']=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
    for( $i=0; $i<=$count; $i++)
    {
     
-    //Query
+	 // increment temp end date 1
+	 // $json['tdate'][$i]=$tsdate;
+	  $tedate = new DateTime($tsdate);
+	  $tedate->modify("+1 day");
+	  $tedate=$tedate->format("Y-m-d");
+	  
+	  // increment temp date 2
+	 // $json['tpdate'][$i]=$tpsdate;
+	  $tpedate = new DateTime($tpsdate);
+	  $tpedate->modify("+1 day");
+	  $tpedate=$tpedate->format("Y-m-d");
+	 
+	 // $tsdate = new DateTime($tdate);
+	 // $tsdate=$tsdate->format("Y-m-d");
 	
-	 $aquery = "SELECT DATE(date_added) as date,COUNT(*) as count FROM lq_order WHERE  date_added BETWEEN '$tsdate' AND '$tsdate'";
-     $bquery = "SELECT DATE(date_added) as date,COUNT(*) as count FROM lq_order WHERE  date_added BETWEEN '$tpsdate' AND '$tpsdate'";
+	
+	
+	
+	
+	
+    //Query
+	                    
+	 $aquery = "SELECT DATE_FORMAT(date_added,'%d-%m-%Y') as date,COUNT(*) as count FROM lq_order WHERE  date_added BETWEEN '$tsdate' AND '$tedate'";
+     $bquery = "SELECT DATE_FORMAT(date_added,'%d-%m-%Y') as date,COUNT(*) as count FROM lq_order WHERE  date_added BETWEEN '$tpsdate' AND '$tpedate'";
 
  $result1 =mysqli_query($dbConn,$aquery) or die("database error:". mysqli_error($dbConn));
  $result2 =mysqli_query($dbConn,$bquery) or die("database error:". mysqli_error($dbConn)); 	
@@ -103,9 +125,11 @@ include("../../common/config.php");
    $row1 = mysqli_fetch_array($result1, MYSQL_ASSOC);
    $row2 = mysqli_fetch_array($result2, MYSQL_ASSOC);
            
-         $json['date1'][$i]=$tsdate;
+         $d1=new DateTime($tsdate);
+		 $json['date1'][$i]=$d1->format("d M Y");
 		 $json['count1'][$i]=$row1['count'];
-		 $json['date2'][$i]=$tpsdate;
+		 $d2=new DateTime($tpsdate);
+		 $json['date2'][$i]=$d2->format("d M Y");
 		 $json['count2'][$i]=$row2['count'];
     
                                                           
