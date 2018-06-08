@@ -410,21 +410,23 @@ function daterangepicker_init() {
    
 		}
 		
-
-		// SYnc data
-	var datai,config;
+            /* -------------- REVENUE CHART --------------   */
+		// Sync data
+	var datai,config1;
     var data1=[],data2=[];
 	datai=0;	
-    var ctx = document.getElementById("Chart1"); // get canvas
+    var ctx = document.getElementById("Chart2"); // get canvas
     ctx.height = 180; 
     var chart;
-    var footerLine1=[0,0,0,0,0,0];
-	var footerLine2=[0,0,0,0,0,0];
+    var footerLine={
+		0:[0,0,0,0,0,0,0],
+	    1:[0,0,0,0,0,0,0]
+		           };
   
-  var  config = {
+  var  config1 = {
 
-    type: 'line',
-	pointStyle:'cross',
+     type: 'line',
+	 pointStyle:'cross',
      data: {
 				labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
 				datasets: [{
@@ -444,45 +446,32 @@ function daterangepicker_init() {
 					
 				}]
 			},
-    options: {
+    options:{
 				responsive: true,
 				
 			spanGaps: false,
 			elements: {
 				line: {
 					tension: 0.000001
-				}
+				      }
 			},
 				title: {
 					display: true,
 					text: 'LQ Sales Report'
 				},
 	
-	tooltips: {
+	tooltips:  {
                 enabled: true,
                 mode: 'index',
                 intersect: true,
 				callbacks:  {
-                afterFooter: function(tooltipItems, data) { 
-				console.log(tooltipItems[0]);
+                label: function(tooltipItems, data) { 
 				
-				
-				if (tooltipItems[0].datasetIndex === 0) {
-					
-					 return 'This Week : ' + footerLine1[tooltipItems[0].index];
-				}
-				else if (tooltipItems[0].datasetIndex === 1)
-			    {
-											  
-					 return 'Last Week: ' + footerLine2[tooltipItems[0].index];		  
-											  
-			    }
-			 							   
+				 var count=tooltipItems.index;
+					 return data.datasets[tooltipItems.datasetIndex].label+': '+footerLine[tooltipItems.datasetIndex][count]+' - '+tooltipItems.yLabel;
+									   
 													   },
-	           												   
-				  footer:function(tooltipItems,data) {
-                     return 'Last Week: ' + footerLine2[tooltipItems[0].index];		
-				                                        }				  
+	           												   				  
 	                         }
 	                         },
 			hover: {
@@ -526,7 +515,7 @@ function daterangepicker_init() {
 	    chart.destroy();
 	                                         }
   
-      chart = new Chart(ctx,config);
+      chart = new Chart(ctx,config1);
 
 	
   
@@ -571,7 +560,7 @@ function daterangepicker_init() {
 	                                             });
  
   
-    console.log(json['count1'][1]);
+    //console.log(json['count1'][1]);
      
     datai = {                                  
 
@@ -604,22 +593,15 @@ function daterangepicker_init() {
                      });
   //config.tooltips.label=  json['date1'];
   
-  footerLine1=json['date1'];
-  footerLine2=json['date2'];
+  footerLine[0]=json['date1'];
+  footerLine[1]=json['date2'];
    
-   console.log(datai.datasets[1].label);
+  // console.log(datai.datasets[1].label);
   
       updateChart();
    }
        
-	
-		
-		
- 
- 		
-
-	
-  },
+   },
     //error handler
     error: function(xhr, ajaxOptions, thrownError) {
       console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -627,12 +609,12 @@ function daterangepicker_init() {
     }
   });	
 	
-return true;
+ return true;
    }	
 	
 	function updateChart()
   {
-	       console.log("update");
+	       
 	      // chart.data.datasets[0].data=data1;
 		  // chart.data.datasets[1].data=data2;
 		   chart.data=datai;
@@ -642,7 +624,225 @@ return true;
 	
 	syncdata();   // sync order data
         
+	  /* -------------- REVENUE CHART --------------   */
+	  
+	  /* -------------- DELIVERED ORDER --------------   */
+	  
+	  
+	  	// Sync data
+	var datai2,config2;
+    var revenue1=[],revenue2=[];
+	datai2=0;	
+    var ctx2 = document.getElementById("Chart1"); // get canvas
+    ctx2.height = 180; 
+    var chart2;
+    var footerLine2={
+		0:[0,0,0,0,0,0,0],
+	    1:[0,0,0,0,0,0,0]
+		           };
+  
+  var  config2 = {
+
+     type: 'bar',
+	 
+     data: {
+				labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+				datasets: [{
+					label: 'This Week',
+					fill: false,
+					backgroundColor: "#98dd1e",
+					borderColor: "green",
+					data: [0,0,0,0,0,0],
+				}, {
+					label: 'Last Week',
+					fill: false,
+					backgroundColor: "#f9d4d4",
+					borderColor: "red",
+			    	data: [0,0,0,0,0,0],
+					
+				}]
+			},
+    options:{
+				responsive: true,
+				
+			spanGaps: false,
+			elements: {
+				line: {
+					tension: 0.000001
+				      }
+			},
+				title: {
+					display: true,
+					text: 'LQ Revenue Report'
+				},
 	
+	tooltips:  {
+                enabled: true,
+                mode: 'index',
+                intersect: true,
+				callbacks:  {
+                label: function(tooltipItems, data) { 
+				
+				 var count=tooltipItems.index;
+					 return data.datasets[tooltipItems.datasetIndex].label+': '+footerLine[tooltipItems.datasetIndex][count]+' - ₹.'+tooltipItems.yLabel;
+									   
+													   },
+	           												   				  
+	                         }
+	                         },
+			hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				plugins: {
+				filler: {
+					propagate: false
+				}
+			   },
+				scales: {
+					xAxes: [{
+						display: true,
+						ticks: {
+						autoSkip: false,
+						maxRotation: 0
+					},
+						scaleLabel: {
+							display: true,
+							labelString: 'Month'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						ticks: {
+						autoSkip: false,
+						maxRotation: 0
+					},
+						scaleLabel: {
+							display: true,
+							labelString: 'Revenue( in ₹ )'
+						}
+					}]
+				}
+			}
+		};	
+		
+		if(typeof chart2 != 'undefined')      {
+	
+	    chart2.destroy();
+	                                         }
+  
+      chart2 = new Chart(ctx2,config2);
+
+	
+  
+   function syncdeliverydata(){
+// ajax data sync
+	$.ajax({
+    url: 'functions/ajaxRevenueStatistics.php',
+    type: 'get',
+	data: '',                                       //$('#chartform').serializeArray()
+    dataType:'json',
+    
+    
+   
+    
+    success: function(json) {
+		
+		
+	
+   	       if(json['status']!='success') {
+		   
+		  new PNotify({
+                                  title: 'SARDIUS WEB PORTAL',
+                                  text: json['error'],
+                                  type: 'error',
+                                  styling: 'bootstrap3',
+                   animate: {
+               animate: true,
+              in_class: 'bounceInLeft',
+              out_class: 'zoomOut'
+                         }
+                              });
+		   
+		                                 }
+    else {
+	// reset and set chart data if not empty
+	
+	     json["revenue1"].forEach(function(packet) {
+         revenue1.push(packet);
+		
+		                                         });
+												  console.log(revenue1);
+		json["revenue2"].forEach(function(packet) {
+        revenue2.push(packet);
+	                                             });
+ 
+  
+    //console.log(json['count1'][1]);
+     
+    datai2 = {                                  
+
+	labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],   
+	datasets :[
+
+              ]
+
+             };
+
+
+// pushing data 
+
+  datai2.datasets.push({
+
+		label : json['label1'],
+		fill:false,
+		backgroundColor: "#98dd1e",
+		borderColor: "green",
+		data : revenue1	
+                     });	
+
+  datai2.datasets.push ({
+
+		label : json['label2'],
+		fill: false,
+		backgroundColor: "#f9d4d4",
+		borderColor: "red",
+		data : revenue2	
+                     });
+  //config.tooltips.label=  json['date1'];
+  
+  footerLine2[0]=json['date1'];
+  footerLine2[1]=json['date2'];
+   
+  // console.log(datai.datasets[1].label);
+  
+      updateChart2();
+   }
+       
+   },
+    //error handler
+    error: function(xhr, ajaxOptions, thrownError) {
+      console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      
+    }
+  });	
+	
+ return true;
+   }	
+	
+	function updateChart2()
+  {
+	       
+	      // chart.data.datasets[0].data=data1;
+		  // chart.data.datasets[1].data=data2;
+		   chart2.data=datai2;
+           chart2.update();
+	  
+  }
+	
+	syncdeliverydata();   // sync order data
+	  
+	  /* -------------- DELIVERED ORDER --------------   */
 	
 </script>
 		

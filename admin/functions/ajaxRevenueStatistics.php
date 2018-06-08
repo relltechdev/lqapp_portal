@@ -108,8 +108,8 @@ include("../../common/config.php");
 	
     //Query
 	                    
-	 $aquery = "SELECT DATE_FORMAT(date_added,'%d-%m-%Y') as date,COUNT(*) as count FROM lq_order WHERE tracking='completed' AND date_added BETWEEN '$tsdate' AND '$tedate'";
-     $bquery = "SELECT DATE_FORMAT(date_added,'%d-%m-%Y') as date,COUNT(*) as count FROM lq_order WHERE  tracking='completed' AND  date_added BETWEEN '$tpsdate' AND '$tpedate'";
+	 $aquery = "SELECT DATE_FORMAT(o.date_added,'%d-%m-%Y') as date,ROUND(t.value, 0) as value,COUNT(*) as count FROM lq_order o INNER JOIN lq_order_total t ON (o.order_id=t.order_id) WHERE t.code='to_pay' AND o.date_added BETWEEN  '$tsdate' AND '$tedate'";
+     $bquery = "SELECT DATE_FORMAT(o.date_added,'%d-%m-%Y') as date,ROUND(t.value, 0) as value,COUNT(*) as count FROM lq_order o INNER JOIN lq_order_total t ON (o.order_id=t.order_id) WHERE t.code='to_pay' AND o.date_added BETWEEN  '$tpsdate' AND '$tpedate'";
 
  $result1 =mysqli_query($dbConn,$aquery) or die("database error:". mysqli_error($dbConn));
  $result2 =mysqli_query($dbConn,$bquery) or die("database error:". mysqli_error($dbConn)); 	
@@ -121,16 +121,38 @@ include("../../common/config.php");
     //Display states list
     if($rowcount1 > 0 && $rowcount2> 0){
 
+	
         
    $row1 = mysqli_fetch_array($result1, MYSQL_ASSOC);
    $row2 = mysqli_fetch_array($result2, MYSQL_ASSOC);
            
+	   
+		   
          $d1=new DateTime($tsdate);
 		 $json['date1'][$i]=$d1->format("d M Y");
-		 $json['count1'][$i]=$row1['count'];
+		 if($row1['count']!=0)
+		 {
+			 $json['revenue1'][$i]=$row1['value'];
+		 }
+		 else
+		 {
+			 $json['revenue1'][$i]=0;
+		 }
+		// $sql = "SELECT value FROM lq_order_total WHERE  code='to_pay' AND order_id='$order_id'";	
+		 
+		// $json['count1'][$i]=$row1['count'];
 		 $d2=new DateTime($tpsdate);
 		 $json['date2'][$i]=$d2->format("d M Y");
-		 $json['count2'][$i]=$row2['count'];
+		 
+		  if($row2['count']!=0)
+		 {
+			 $json['revenue2'][$i]=$row2['value'];
+		 }
+		 else
+		 {
+			 $json['revenue2'][$i]=0;
+		 }
+		// $json['count2'][$i]=$row2['count'];
     
                                                           
      
