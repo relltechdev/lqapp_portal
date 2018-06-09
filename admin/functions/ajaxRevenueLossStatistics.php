@@ -108,8 +108,8 @@ include("../../common/config.php");
 	
     //Query
 	                    
-	 $aquery = "SELECT DATE_FORMAT(o.date_added,'%d-%m-%Y') as date,ROUND(t.value, 0) as value,COUNT(*) as count FROM lq_order o INNER JOIN lq_order_total t ON (o.order_id=t.order_id) WHERE o.tracking='completed' AND t.code='to_pay' AND o.date_added BETWEEN  '$tsdate' AND '$tedate'";
-     $bquery = "SELECT DATE_FORMAT(o.date_added,'%d-%m-%Y') as date,ROUND(t.value, 0) as value,COUNT(*) as count FROM lq_order o INNER JOIN lq_order_total t ON (o.order_id=t.order_id) WHERE o.tracking='completed' AND t.code='to_pay' AND o.date_added BETWEEN  '$tpsdate' AND '$tpedate'";
+	 $aquery = "SELECT DATE_FORMAT(o.date_added,'%d-%m-%Y') as date,ROUND(t.value, 0) as value,COUNT(*) as count FROM lq_order o INNER JOIN lq_order_total t ON (o.order_id=t.order_id) WHERE o.tracking='' AND t.code='to_pay' AND o.date_added BETWEEN  '$tsdate' AND '$tedate'";
+     $bquery = "SELECT DATE_FORMAT(o.date_added,'%d-%m-%Y') as date,ROUND(t.value, 0) as value,COUNT(*) as count FROM lq_order o INNER JOIN lq_order_total t ON (o.order_id=t.order_id) WHERE o.tracking='' AND t.code='to_pay' AND o.date_added BETWEEN  '$tpsdate' AND '$tpedate'";
 
  $result1 =mysqli_query($dbConn,$aquery) or die("database error:". mysqli_error($dbConn));
  $result2 =mysqli_query($dbConn,$bquery) or die("database error:". mysqli_error($dbConn)); 	
@@ -132,11 +132,11 @@ include("../../common/config.php");
 		 $json['date1'][$i]=$d1->format("d M Y");
 		 if($row1['count']!=0)
 		 {
-			 $json['revenue1'][$i]=$row1['value'];
+			 $json['revenueloss1'][$i]=$row1['value'];
 		 }
 		 else
 		 {
-			 $json['revenue1'][$i]=0;
+			 $json['revenueloss1'][$i]=0;
 		 }
 		// $sql = "SELECT value FROM lq_order_total WHERE  code='to_pay' AND order_id='$order_id'";	
 		 
@@ -146,11 +146,11 @@ include("../../common/config.php");
 		 
 		  if($row2['count']!=0)
 		 {
-			 $json['revenue2'][$i]=$row2['value'];
+			 $json['revenueloss2'][$i]=$row2['value'];
 		 }
 		 else
 		 {
-			 $json['revenue2'][$i]=0;
+			 $json['revenueloss2'][$i]=0;
 		 }
 		// $json['count2'][$i]=$row2['count'];
     
