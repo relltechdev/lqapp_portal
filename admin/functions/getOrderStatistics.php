@@ -12,7 +12,7 @@ try{
 //week success orders	
 
 	
-	 $query ="SELECT COUNT(*) as count FROM lq_order WHERE transaction_status='SUCCESS' AND HOUR(TIMEDIFF(NOW(),date_added))/24 <=7";
+	 $query ="SELECT COUNT(*) as count FROM lq_order WHERE transaction_status='SUCCESS' AND tracking='completed' AND HOUR(TIMEDIFF(NOW(),date_added))/24 <=7";
     
      $result=mysqli_query($dbConn,$query) or die("database error:". mysqli_error($dbConn)); 
 
@@ -25,7 +25,7 @@ try{
      }
 
 //week failed orders
-      $query ="SELECT COUNT(*) as count FROM lq_order WHERE transaction_status!='SUCCESS' AND HOUR(TIMEDIFF(NOW(),date_added))/24 <=7";
+      $query ="SELECT COUNT(*) as count FROM lq_order WHERE transaction_status!='SUCCESS' AND tracking='' AND HOUR(TIMEDIFF(NOW(),date_added))/24 <=7";
     
      $result=mysqli_query($dbConn,$query) or die("database error:". mysqli_error($dbConn)); 
 
@@ -40,7 +40,7 @@ try{
 	//month success orders	
 
 	
-	 $query ="SELECT COUNT(*) as count FROM lq_order WHERE transaction_status='SUCCESS' AND MONTH(NOW())=MONTH(date_added) AND YEAR(NOW())=YEAR(date_added)";
+	 $query ="SELECT COUNT(*) as count FROM lq_order WHERE transaction_status='SUCCESS' AND tracking='completed' AND MONTH(NOW())=MONTH(date_added) AND YEAR(NOW())=YEAR(date_added)";
     
      $result=mysqli_query($dbConn,$query) or die("database error:". mysqli_error($dbConn)); 
 
@@ -53,7 +53,7 @@ try{
      }
 
   //month failed orders
-      $query ="SELECT COUNT(*) as count FROM lq_order WHERE transaction_status!='SUCCESS' AND MONTH(NOW())=MONTH(date_added) AND YEAR(NOW())=YEAR(date_added)";
+      $query ="SELECT COUNT(*) as count FROM lq_order WHERE transaction_status!='SUCCESS' AND tracking='' AND MONTH(NOW())=MONTH(date_added) AND YEAR(NOW())=YEAR(date_added)";
     
      $result=mysqli_query($dbConn,$query) or die("database error:". mysqli_error($dbConn)); 
 

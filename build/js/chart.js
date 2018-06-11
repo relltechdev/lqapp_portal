@@ -1,4 +1,10 @@
-/* -------------- REVENUE CHART --------------   */
+/* Global variables */
+
+var datedata=[];
+
+
+
+/* -------------- DELIVERED ORDER CHART --------------   */
 		// Sync data
 	var datai,config1;
     var data1=[],data2=[];
@@ -45,7 +51,7 @@
 			},
 				title: {
 					display: true,
-					text: 'LQ Sales Report'
+					text: 'LQ Delivered Order Report'
 				},
 	
 	tooltips:  {
@@ -80,7 +86,7 @@
 					},
 						scaleLabel: {
 							display: true,
-							labelString: 'Month'
+							labelString: 'Time Line'
 						}
 					}],
 					yAxes: [{
@@ -112,7 +118,7 @@
 	$.ajax({
     url: 'functions/ajaxOrderStatistics.php',
     type: 'get',
-	data: '',                                       //$('#chartform').serializeArray()
+	data: datedata,                                       //$('#chartform').serializeArray()
     dataType:'json',
     
     
@@ -152,7 +158,7 @@
      
     datai = {                                  
 
-	labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],   
+	labels: json['label'],   
 	datasets :[
 
               ]
@@ -210,14 +216,14 @@
 	  
   }
 	
-	syncdata();   // sync order data
+	
         
-	  /* -------------- REVENUE CHART --------------   */
+	  /* -------------- ORDER DELIVERED CHART --------------   */
 	  
 	  
 	  
 	    
-	  /* -------------- DELIVERED ORDER --------------   */
+	  /* -------------- REVENUE EARNED CHART --------------   */
 	  
 	  
 	  	// Sync data
@@ -299,7 +305,7 @@
 					},
 						scaleLabel: {
 							display: true,
-							labelString: 'Month'
+							labelString: 'Time Line'
 						}
 					}],
 					yAxes: [{
@@ -331,7 +337,7 @@
 	$.ajax({
     url: 'functions/ajaxRevenueStatistics.php',
     type: 'get',
-	data: '',                                       //$('#chartform').serializeArray()
+	data: datedata,                                       //$('#chartform').serializeArray()
     dataType:'json',
     
     
@@ -373,7 +379,7 @@
      
     datai2 = {                                  
 
-	labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],   
+	labels: json['label'],   
 	datasets :[
 
               ]
@@ -431,9 +437,9 @@
 	  
   }
 	
-	syncdeliverydata();   // sync order data
+	
 	  
-	  /* -------------- DELIVERED ORDER --------------   */
+	  /* -------------- REVENUE  REPORT--------------   */
 	  
 	   /* -------------- REVENUE LOSS --------------   */
 	  
@@ -482,7 +488,7 @@
 			},
 				title: {
 					display: true,
-					text: 'LQ Revenue Report'
+					text: 'LQ Revenue Loss Report'
 				},
 	
 	tooltips:  {
@@ -517,7 +523,7 @@
 					},
 						scaleLabel: {
 							display: true,
-							labelString: 'Month'
+							labelString: 'Time Line'
 						}
 					}],
 					yAxes: [{
@@ -528,7 +534,7 @@
 					},
 						scaleLabel: {
 							display: true,
-							labelString: 'Revenue( in ₹ )'
+							labelString: 'Revenue Loss( in ₹ )'
 						}
 					}]
 				}
@@ -549,7 +555,7 @@
 	$.ajax({
     url: 'functions/ajaxRevenueLossStatistics.php',
     type: 'get',
-	data: '',                                       //$('#chartform').serializeArray()
+	data: datedata,                                       //$('#chartform').serializeArray()
     dataType:'json',
     
     
@@ -591,7 +597,7 @@
      
     datai3 = {                                  
 
-	labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],   
+	labels: json['label'],   
 	datasets :[
 
               ]
@@ -649,6 +655,251 @@
 	  
   }
 	
-	syncrevenuelossdata();   // sync order data
+	
 	  
 	  /* --------------  REVENUE LOSS  --------------   */
+	  
+	  
+	     
+	  /* -------------- DELIVERY FAILED ORDER --------------   */
+	  
+	  
+	  	// Sync data
+	var datai4,config4;
+   var faileddata1=[],faileddata2=[];
+	datai4=0;	
+    var ctx4 = document.getElementById("Chart4"); // get canvas
+    ctx4.height = 180; 
+    var chart4;
+    var footerLine4={
+		0:[0,0,0,0,0,0,0],
+	    1:[0,0,0,0,0,0,0]
+		           };
+  
+   
+  var  config4 = {
+
+     type: 'line',
+	 pointStyle:'cross',
+     data: {
+				labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+				datasets: [{
+					label: 'This Week',
+					backgroundColor: "#98dd1e",
+					borderColor: "green",
+					data: [0,0,0,0,0,0],
+					
+					fill: false,
+				}, {
+					label: 'Last Week',
+					pointStyle:'cross',
+					fill: false,
+					backgroundColor: "#f9d4d4",
+					borderColor: "red",
+			    	data: [0,0,0,0,0,0],
+					
+				}]
+			},
+    options:{
+				responsive: true,
+				
+			spanGaps: false,
+			elements: {
+				line: {
+					tension: 0.000001
+				      }
+			},
+				title: {
+					display: true,
+					text: 'LQ Delivery Failed Report'
+				},
+	
+	tooltips:  {
+                enabled: true,
+                mode: 'index',
+                intersect: true,
+				callbacks:  {
+                label: function(tooltipItems, data) { 
+				
+				 var count=tooltipItems.index;
+					 return data.datasets[tooltipItems.datasetIndex].label+': '+footerLine[tooltipItems.datasetIndex][count]+' - '+tooltipItems.yLabel;
+									   
+													   },
+	           												   				  
+	                         }
+	                         },
+			hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				plugins: {
+				filler: {
+					propagate: false
+				}
+			   },
+				scales: {
+					xAxes: [{
+						display: true,
+						ticks: {
+						autoSkip: false,
+						maxRotation: 0
+					},
+						scaleLabel: {
+							display: true,
+							labelString: 'Time Line'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						ticks: {
+						autoSkip: false,
+						maxRotation: 0
+					},
+						scaleLabel: {
+							display: true,
+							labelString: 'Orders'
+						}
+					}]
+				}
+			}
+		};	
+		
+		if(typeof chart4 != 'undefined')      {
+	
+	    chart4.destroy();
+	                                         }
+  
+      chart4 = new Chart(ctx4,config4);
+
+	
+  
+   function syncfailedorderdata(){
+// ajax data sync
+	$.ajax({
+    url: 'functions/ajaxOrderFailedStatistics.php',
+    type: 'get',
+	data: datedata,                                       //$('#chartform').serializeArray()
+    dataType:'json',
+    
+    
+   
+    
+    success: function(json) {
+		
+		
+	
+   	       if(json['status']!='success') {
+		   
+		  new PNotify({
+                                  title: 'SARDIUS WEB PORTAL',
+                                  text: json['error'],
+                                  type: 'error',
+                                  styling: 'bootstrap3',
+                   animate: {
+               animate: true,
+              in_class: 'bounceInLeft',
+              out_class: 'zoomOut'
+                         }
+                              });
+		   
+		                                 }
+    else {
+	// reset and set chart data if not empty
+	
+	     json["failedcount1"].forEach(function(packet) {
+         faileddata1.push(packet);
+		
+		                                         });
+												  console.log(revenue1);
+		json["failedcount2"].forEach(function(packet) {
+        faileddata2.push(packet);
+	                                             });
+ 
+  
+    //console.log(json['count1'][1]);
+     
+    datai4 = {                                  
+
+	labels: json['label'],   
+	datasets :[
+
+              ]
+
+             };
+
+
+// pushing data 
+
+  datai4.datasets.push({
+
+		label : json['label1'],
+		fill:false,
+		backgroundColor: "#98dd1e",
+		borderColor: "green",
+		data : faileddata1	
+                     });	
+
+  datai4.datasets.push ({
+
+		label : json['label2'],
+		fill: false,
+		backgroundColor: "#f9d4d4",
+		borderColor: "red",
+		data : faileddata2	
+                     });
+  //config.tooltips.label=  json['date1'];
+  
+  footerLine4[0]=json['date1'];
+  footerLine4[1]=json['date2'];
+   
+  // console.log(datai.datasets[1].label);
+  
+      updateChart4();
+   }
+       
+   },
+    //error handler
+    error: function(xhr, ajaxOptions, thrownError) {
+      console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      
+    }
+  });	
+	
+ return true;
+   }	
+	
+	function updateChart4()
+  {
+	       
+	      // chart.data.datasets[0].data=data1;
+		  // chart.data.datasets[1].data=data2;
+		   chart4.data=datai4;
+           chart4.update();
+	  
+  }
+	
+	
+	  
+	  /* -------------- FAILED ORDER --------------   */
+	  
+	  
+	  
+	  /*  CALL FUNCTIONS */
+	  
+	 function loadChart(sdate,edate)
+	 {
+		 if(sdate!=""&&edate!="")
+		 {
+			 datedata={'sdate':sdate,'edate':edate};
+			 console.log(datedata);
+		 }
+		 
+		syncdeliverydata();       // sync order deivered data - chart 1
+		syncdata();               // sync order data Chart 2
+		syncrevenuelossdata();    // sync revenue loss data - chart 3
+		syncfailedorderdata();    // sync failed order data - chart 4 
+		 
+		 
+		 
+		 
+	 }

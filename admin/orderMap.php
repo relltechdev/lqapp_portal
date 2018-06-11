@@ -54,8 +54,8 @@
                      <div id="daterange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                       <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                       <span>January 01, 2018 - December 31, 2019</span> <b class="caret"></b>
-					  <input type="hidden" id="sdate" />
-					   <input type="hidden" id="edate" />
+					  <input type="hidden" id="sdate" value='<?php if(isset($_GET['sdate'])==true){echo $_GET['sdate'];}?>'/>
+					   <input type="hidden" id="edate" value='<?php if(isset($_GET['edate'])==true){echo $_GET['edate']; }?>' />
                     </div>
                     </div>
                     <div class="clearfix"></div>
@@ -83,29 +83,6 @@
                        <canvas id="Chart1" width="400" height="auto"></canvas>
                        </div>
 					  
-                        <div class="tiles">
-                        <div class="col-md-4 tile">
-                          <span>Expected Revenue</span>
-                          <h2>231,809</h2>
-                          <span class="sparkline11 graph" style="height: 160px;">
-                               <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
-                        </div>
-                        <div class="col-md-4 tile">
-                          <span>Total Loss</span>
-                          <h2>$231,809</h2>
-                          <span class="sparkline22 graph" style="height: 160px;">
-                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
-                        </div>
-                        <div class="col-md-4 tile">
-                          <span>Total Revenue</span>
-                          <h2>231,809</h2>
-                          <span class="sparkline11 graph" style="height: 160px;">
-                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
-                        </div>
-                      </div>
 
                       </div>
 						  
@@ -118,30 +95,6 @@
                        <canvas id="Chart2" width="400" height="auto"></canvas>
                        </div>
 					  
-                        <div class="tiles">
-                        <div class="col-md-4 tile">
-                          <span>Expected Revenue</span>
-                          <h2>231,809</h2>
-                          <span class="sparkline11 graph" style="height: 160px;">
-                               <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
-                        </div>
-                        <div class="col-md-4 tile">
-                          <span>Total Loss</span>
-                          <h2>$231,809</h2>
-                          <span class="sparkline22 graph" style="height: 160px;">
-                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
-                        </div>
-                        <div class="col-md-4 tile">
-                          <span>Total Revenue</span>
-                          <h2>231,809</h2>
-                          <span class="sparkline11 graph" style="height: 160px;">
-                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
-                        </div>
-                      </div>
-
                       </div>
 						  
                       </div>
@@ -155,31 +108,7 @@
                        <canvas id="Chart3" width="400" height="auto"></canvas>
                        </div>
 					  
-                        <div class="tiles">
-                        <div class="col-md-4 tile">
-                          <span>Expected Revenue</span>
-                          <h2>231,809</h2>
-                          <span class="sparkline11 graph" style="height: 160px;">
-                               <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
                         </div>
-                        <div class="col-md-4 tile">
-                          <span>Total Loss</span>
-                          <h2>$231,809</h2>
-                          <span class="sparkline22 graph" style="height: 160px;">
-                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
-                        </div>
-                        <div class="col-md-4 tile">
-                          <span>Total Revenue</span>
-                          <h2>231,809</h2>
-                          <span class="sparkline11 graph" style="height: 160px;">
-                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
-                        </div>
-                      </div>
-
-                      </div>
 						  
                        </div>
 						<!-- tab 4 content -->
@@ -190,29 +119,7 @@
                        <canvas id="Chart4" width="400" height="auto"></canvas>
                        </div>
 					  
-                        <div class="tiles">
-                        <div class="col-md-4 tile">
-                          <span>Expected Revenue</span>
-                          <h2>231,809</h2>
-                          <span class="sparkline11 graph" style="height: 160px;">
-                               <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
-                        </div>
-                        <div class="col-md-4 tile">
-                          <span>Total Loss</span>
-                          <h2>$231,809</h2>
-                          <span class="sparkline22 graph" style="height: 160px;">
-                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
-                        </div>
-                        <div class="col-md-4 tile">
-                          <span>Total Revenue</span>
-                          <h2>231,809</h2>
-                          <span class="sparkline11 graph" style="height: 160px;">
-                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
-                        </div>
-                      </div>
+                       
 
                       </div>
 						  
@@ -223,8 +130,11 @@
                     </div>
 					 <!-- tab panel ends-->
 
-                  </div>
+                
+
+				 </div>
                 </div>
+				
               </div>
 			  <!-- tab panel end -->
 			  
@@ -267,32 +177,29 @@
                   </div>
                   <div class="x_content">
 
-                    <div class="row" style="border-bottom: 1px solid #E0E0E0; padding-bottom: 5px; margin-bottom: 5px;">
-                      <div class="col-md-7" style="overflow:hidden;">
-                        <span class="sparkline_one" style="height: 160px; padding: 10px 25px;">
-                                      <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                                
-								 </span>
-                        <h4 style="margin:18px">Weekly sales progress</h4>
-                      </div>
-
-                      <div class="col-md-5">
-                        <div class="row" style="text-align: center;">
-                          <div class="col-md-4">
-                            <canvas class="canvasDoughnut" height="110" width="110" style="margin: 5px 10px 10px 0"></canvas>
-                            <h4 style="margin:0">Expected Revenue</h4>
-                          </div>
-                          <div class="col-md-4">
-                            <canvas class="canvasDoughnut" height="110" width="110" style="margin: 5px 10px 10px 0"></canvas>
-                            <h4 style="margin:0">Total Loss</h4>
-                          </div>
-                          <div class="col-md-4">
-                            <canvas class="canvasDoughnut" height="110" width="110" style="margin: 5px 10px 10px 0"></canvas>
-                            <h4 style="margin:0">Total Revenue</h4>
-                          </div>
+                     
+                        <div class="col-md-4 tile">
+                          <span>Expected Revenue</span>
+                          <h2>231,809</h2>
+                          <span class="sparkline11 graph" style="height: 160px;">
+                               <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                          </span>
                         </div>
-                      </div>
-                    </div>
+                        <div class="col-md-4 tile">
+                          <span>Total Loss</span>
+                          <h2>$231,809</h2>
+                          <span class="sparkline22 graph" style="height: 160px;">
+                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                          </span>
+                        </div>
+                        <div class="col-md-4 tile">
+                          <span>Total Revenue</span>
+                          <h2>231,809</h2>
+                          <span class="sparkline11 graph" style="height: 160px;">
+                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                          </span>
+                        </div>
+                   
                   </div>
                 </div>
               </div>
@@ -312,7 +219,9 @@
 		$(document).ready(function(){
 			
 		daterangepicker_init();	
-		
+		    var sdate=$('#sdate').val();
+		    var edate=$('#edate').val();
+		    loadChart(sdate,edate);
 		
 		});
 		
@@ -349,7 +258,7 @@ function daterangepicker_init() {
 			  ranges: {
 				//'Today': [moment(), moment()],
 				//'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-				'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+				'Last Week': [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')],
 				//'Last 30 Days': [moment().subtract(29, 'days'), moment()],
 				'This week': [moment().startOf('week'), moment()],
 				'This Month': [moment().startOf('month'), moment().endOf('month')],
@@ -392,6 +301,10 @@ function daterangepicker_init() {
 			$('#edate').val(edate);
 			url= '?edate='+edate+'&sdate='+sdate; 
 			//window.location.href=url;
+			var sdate=$('#sdate').val();
+		    var edate=$('#edate').val();
+		    loadChart(sdate,edate);
+			
 			});
 			$('#daterange').on('cancel.daterangepicker', function(ev, picker) {
 			  window.location.href='manageOrders.php';
