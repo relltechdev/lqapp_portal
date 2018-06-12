@@ -157,7 +157,7 @@
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Weekly Summary <small>Activity shares</small></h2>
+                    <h2>Statistics Summary <small>based on chart</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -180,24 +180,18 @@
                      
                         <div class="col-md-4 tile">
                           <span>Expected Revenue</span>
-                          <h2>231,809</h2>
-                          <span class="sparkline11 graph" style="height: 160px;">
-                               <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
+                          <h2 class="expected_val">231,809</h2>
+                         
                         </div>
                         <div class="col-md-4 tile">
                           <span>Total Loss</span>
-                          <h2>$231,809</h2>
-                          <span class="sparkline22 graph" style="height: 160px;">
-                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
+                          <h2 class="loss_val">$231,809</h2>
+                          
                         </div>
                         <div class="col-md-4 tile">
                           <span>Total Revenue</span>
-                          <h2>231,809</h2>
-                          <span class="sparkline11 graph" style="height: 160px;">
-                                 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                          </span>
+                          <h2 class="total_val">231,809</h2>
+                         
                         </div>
                    
                   </div>
@@ -222,7 +216,7 @@
 		    var sdate=$('#sdate').val();
 		    var edate=$('#edate').val();
 		    loadChart(sdate,edate);
-		
+		    getsummary(sdate,edate);
 		});
 		
 		
@@ -260,7 +254,7 @@ function daterangepicker_init() {
 				//'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
 				'Last Week': [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')],
 				//'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-				'This week': [moment().startOf('week'), moment()],
+				'This week': [moment().startOf('week'), moment().endOf('week')],
 				'This Month': [moment().startOf('month'), moment().endOf('month')],
 				'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
 				'This Year': [moment().startOf('year'), moment().endOf('year')]
@@ -304,6 +298,7 @@ function daterangepicker_init() {
 			var sdate=$('#sdate').val();
 		    var edate=$('#edate').val();
 		    loadChart(sdate,edate);
+			getsummary(sdate,edate);
 			
 			});
 			$('#daterange').on('cancel.daterangepicker', function(ev, picker) {
@@ -323,7 +318,69 @@ function daterangepicker_init() {
    
 		}
 		
-            
+        
+
+//statistics summary
+
+
+function getsummary(sdate,edate){
+	   
+	   var datedata=[];
+	   
+	   if(sdate!=""&&edate!="")
+		 {
+			 datedata={'sdate':sdate,'edate':edate};
+			 console.log(datedata);
+		 }
+	 
+// ajax data sync
+	$.ajax({
+    url: 'functions/ajaxStatisticsSummary.php',
+    type: 'get',
+	data: datedata,                                       //$('#chartform').serializeArray()
+    dataType:'json',
+    
+    
+   
+    
+    success: function(json) {
+		
+		
+	
+   	       if(json['status']!='success') {
+		   
+		  new PNotify({
+                                  title: 'SARDIUS WEB PORTAL',
+                                  text: json['error'],
+                                  type: 'error',
+                                  styling: 'bootstrap3',
+                   animate: {
+               animate: true,
+              in_class: 'bounceInLeft',
+              out_class: 'zoomOut'
+                         }
+                              });
+		   
+		                                 }
+    else {
+	// reset and set chart data if not empty
+	
+	   
+ $('.expected_val').html(json['expected']);
+ $('.loss_val').html(json['loss']);
+ $('.total_val').html(json['gain']);
+   }
+       
+   },
+    //error handler
+    error: function(xhr, ajaxOptions, thrownError) {
+      console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      
+    }
+  });	
+	
+ return true;
+   }			
 	
 	
 </script>

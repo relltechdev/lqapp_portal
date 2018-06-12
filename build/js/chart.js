@@ -20,19 +20,19 @@ var datedata=[];
   var  config1 = {
 
      type: 'line',
-	 pointStyle:'cross',
      data: {
 				labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
 				datasets: [{
 					label: 'This Week',
 					backgroundColor: "#98dd1e",
 					borderColor: "green",
+					borderWidth: 2,
 					data: [0,0,0,0,0,0],
 					
 					fill: false,
 				}, {
 					label: 'Last Week',
-					pointStyle:'cross',
+					borderWidth: 2,
 					fill: false,
 					backgroundColor: "#f9d4d4",
 					borderColor: "red",
@@ -114,6 +114,9 @@ var datedata=[];
 	
   
    function syncdata(){
+	   
+	   datai=0;
+	 data1=[],data2=[];
 // ajax data sync
 	$.ajax({
     url: 'functions/ajaxOrderStatistics.php',
@@ -172,8 +175,9 @@ var datedata=[];
 
 		label : json['label1'],
 		fill:false,
-		backgroundColor: "#98dd1e",
-		borderColor: "green",
+		backgroundColor: "#5ddc42",
+		borderColor: "#4e8a3e",
+		borderWidth: 2,
 		data : data1	
                      });	
 
@@ -181,8 +185,9 @@ var datedata=[];
 
 		label : json['label2'],
 		fill: false,
-		backgroundColor: "#f9d4d4",
-		borderColor: "red",
+		backgroundColor: "red",
+		borderWidth: 2,
+		borderColor: "#ff9e93",
 		data : data2	
                      });
   //config.tooltips.label=  json['date1'];
@@ -191,7 +196,7 @@ var datedata=[];
   footerLine[1]=json['date2'];
    
   // console.log(datai.datasets[1].label);
-  
+      
       updateChart();
    }
        
@@ -211,6 +216,7 @@ var datedata=[];
 	       
 	      // chart.data.datasets[0].data=data1;
 		  // chart.data.datasets[1].data=data2;
+
 		   chart.data=datai;
            chart.update();
 	  
@@ -333,7 +339,9 @@ var datedata=[];
 	
   
    function syncdeliverydata(){
-// ajax data sync
+   // ajax data sync
+   datai2=0;
+   revenue1=[],revenue2=[];
 	$.ajax({
     url: 'functions/ajaxRevenueStatistics.php',
     type: 'get',
@@ -369,12 +377,12 @@ var datedata=[];
          revenue1.push(packet);
 		
 		                                         });
-												  console.log(revenue1);
+    // console.log(revenue1);
 		json["revenue2"].forEach(function(packet) {
         revenue2.push(packet);
 	                                             });
  
-  
+    //console.log(revenue2);
     //console.log(json['count1'][1]);
      
     datai2 = {                                  
@@ -388,7 +396,7 @@ var datedata=[];
 
 
 // pushing data 
-
+console.log(revenue1);
   datai2.datasets.push({
 
 		label : json['label1'],
@@ -397,7 +405,7 @@ var datedata=[];
 		borderColor: "green",
 		data : revenue1	
                      });	
-
+console.log(revenue2);
   datai2.datasets.push ({
 
 		label : json['label2'],
@@ -552,6 +560,10 @@ var datedata=[];
   
    function syncrevenuelossdata(){
 // ajax data sync
+
+    datai3=0;
+	revenueloss1=[],revenueloss2=[];
+	
 	$.ajax({
     url: 'functions/ajaxRevenueLossStatistics.php',
     type: 'get',
@@ -587,7 +599,7 @@ var datedata=[];
          revenueloss1.push(packet);
 		
 		                                         });
-												  console.log(revenueloss1);
+	// console.log(revenueloss1);
 		json["revenueloss2"].forEach(function(packet) {
         revenueloss2.push(packet);
 	                                             });
@@ -680,19 +692,19 @@ var datedata=[];
   var  config4 = {
 
      type: 'line',
-	 pointStyle:'cross',
      data: {
 				labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
 				datasets: [{
 					label: 'This Week',
 					backgroundColor: "#98dd1e",
 					borderColor: "green",
+					borderWidth: 2,
 					data: [0,0,0,0,0,0],
 					
 					fill: false,
 				}, {
 					label: 'Last Week',
-					pointStyle:'cross',
+					borderWidth: 2,
 					fill: false,
 					backgroundColor: "#f9d4d4",
 					borderColor: "red",
@@ -775,6 +787,10 @@ var datedata=[];
   
    function syncfailedorderdata(){
 // ajax data sync
+
+    datai4=0;
+	faileddata1=[],faileddata2=[];
+	
 	$.ajax({
     url: 'functions/ajaxOrderFailedStatistics.php',
     type: 'get',
@@ -810,7 +826,7 @@ var datedata=[];
          faileddata1.push(packet);
 		
 		                                         });
-												  console.log(revenue1);
+	  
 		json["failedcount2"].forEach(function(packet) {
         faileddata2.push(packet);
 	                                             });
@@ -827,15 +843,16 @@ var datedata=[];
 
              };
 
-
+  console.log(datai4);
 // pushing data 
 
   datai4.datasets.push({
 
 		label : json['label1'],
 		fill:false,
-		backgroundColor: "#98dd1e",
-		borderColor: "green",
+	    backgroundColor: "#5ddc42",
+		borderColor: "#4e8a3e",
+		borderWidth: 2,
 		data : faileddata1	
                      });	
 
@@ -843,8 +860,9 @@ var datedata=[];
 
 		label : json['label2'],
 		fill: false,
-		backgroundColor: "#f9d4d4",
-		borderColor: "red",
+		backgroundColor: "red",
+		borderColor: "#ff9e93",
+		borderWidth: 2,
 		data : faileddata2	
                      });
   //config.tooltips.label=  json['date1'];
@@ -873,6 +891,12 @@ var datedata=[];
 	       
 	      // chart.data.datasets[0].data=data1;
 		  // chart.data.datasets[1].data=data2;
+    chart4.data.labels.pop();
+    chart4.data.datasets.forEach((dataset) => {
+        dataset.data.pop();
+    });
+	
+	
 		   chart4.data=datai4;
            chart4.update();
 	  

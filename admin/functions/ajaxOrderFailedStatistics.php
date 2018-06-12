@@ -45,7 +45,7 @@ include("../../common/config.php");
   
   if($daycheck!="Mon")
   {
-  $sdate=date('Y-m-d', strtotime('next monday', strtotime($sdate)));
+  $sdate=date('Y-m-d', strtotime('previous monday', strtotime($sdate)));
   $edate=new DateTime($sdate);
   $edate->modify("+6 day");
   $edate=$edate->format("Y-m-d");
@@ -203,6 +203,10 @@ include("../../common/config.php");
 	  $tpsdate=$psdate;
 	  $tpedate=$pedate;
   
+   $label1=new DateTime($tsdate);
+   $json['label1']=$label1->format("M Y");
+   $label2=new DateTime($psdate);
+   $json['label2']=$label2->format("M Y");
   
    for( $i=0; $i<=$count; $i++)
    {
@@ -254,8 +258,7 @@ include("../../common/config.php");
 		 $json['failedcount2'][$i]=$row2['count'];
     
 	   
-       $json['label1']=$d1->format("M Y");
-	   $json['label2']=$d2->format("M Y");
+     
        $json['status']="success";
        $json['msg']="Data loaded";
           
@@ -284,6 +287,87 @@ include("../../common/config.php");
 	
 	   
    }
+	  
+	  
+  }
+  else if($type=="year")
+  {
+	  
+	  
+	$cyear=date("Y",strtotime($sdate));
+	$pyear=date('Y', strtotime('previous year', strtotime($sdate)));
+	$smonth=1;
+	$emonth=12;
+	 
+    
+  $json=array();
+  $data1=array();
+  $data2=array();
+  
+   
+	  //date 2
+	  
+	  $tpsdate=$psdate;
+	  $tpedate=$pedate;
+  
+  
+   for( $i=0; $i<$emonth; $i++)
+   {
+    
+	 
+	
+	
+   $monthNum  =$i+1;
+   $dateObj   = DateTime::createFromFormat('!m', $monthNum);
+   $monthName = $dateObj->format('F'); // March
+	
+	$json['label'][$i]=$monthName;
+	
+    //Query
+	                    
+	 $aquery = "SELECT COUNT(*) as count FROM lq_order WHERE tracking='' AND MONTH(date_added)='$monthNum' AND YEAR(date_added)='$cyear'";
+     $bquery = "SELECT COUNT(*) as count FROM lq_order WHERE  tracking='' AND  MONTH(date_added)='$monthNum' AND YEAR(date_added)='$pyear'";
+
+ $result1 =mysqli_query($dbConn,$aquery) or die("database error:". mysqli_error($dbConn));
+ $result2 =mysqli_query($dbConn,$bquery) or die("database error:". mysqli_error($dbConn)); 	
+    //Count total number of rows
+     $rowcount1=mysqli_num_rows($result1);
+	 $rowcount2=mysqli_num_rows($result2);
+   
+
+    //Display states list
+    if($rowcount1 > 0 && $rowcount2> 0){
+
+        
+   $row1 = mysqli_fetch_array($result1, MYSQL_ASSOC);
+   $row2 = mysqli_fetch_array($result2, MYSQL_ASSOC);
+           
+        
+		 $json['date1'][$i]=$monthName+" "+$cyear;
+		 $json['failedcount1'][$i]=$row1['count'];
+		 
+		 $json['date2'][$i]=$monthName+" "+$pyear;
+		 $json['failedcount2'][$i]=$row2['count'];
+    
+	   
+       $json['label1']=$cyear;
+	   $json['label2']=$pyear;
+       $json['status']="success";
+       $json['msg']="Data loaded";
+          
+
+        }
+    else
+	   {
+	    $json["status"]="failed";
+       $json['msg']="Data loading failed";
+       }
+	   
+
+	
+	   
+   }  
+	  
 	  
 	  
   }

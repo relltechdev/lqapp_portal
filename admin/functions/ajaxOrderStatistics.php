@@ -44,7 +44,7 @@ include("../../common/config.php");
   
   if($daycheck!="Mon")
   {
-  $sdate=date('Y-m-d', strtotime('next monday', strtotime($sdate)));
+  $sdate=date('Y-m-d', strtotime('previous monday', strtotime($sdate)));
   $edate=new DateTime($sdate);
   $edate->modify("+6 day");
   $edate=$edate->format("Y-m-d");
@@ -200,7 +200,11 @@ include("../../common/config.php");
 	  
 	  $tpsdate=$psdate;
 	  $tpedate=$pedate;
-  
+	  
+   $label1=new DateTime($tsdate);
+   $json['label1']=$label1->format("M Y");
+   $label2=new DateTime($psdate);
+   $json['label2']=$label2->format("M Y");
   
    for( $i=0; $i<=$count; $i++)
    {
@@ -252,8 +256,7 @@ include("../../common/config.php");
 		 $json['count2'][$i]=$row2['count'];
     
 	   
-       $json['label1']=$d1->format("M Y");
-	   $json['label2']=$d2->format("M Y");
+      
        $json['status']="success";
        $json['msg']="Data loaded";
           
@@ -289,18 +292,12 @@ include("../../common/config.php");
   {
 	  
 	  
+	$cyear=date("Y",strtotime($sdate));
+	$pyear=date('Y', strtotime('previous year', strtotime($sdate)));
+	$smonth=1;
+	$emonth=12;
 	 
-	  $tsdate=$sdate;
-	  $tedate=$edate;
-	  
     
-	  
-	   // past date range  
-  $psdate=date('Y-m-d', strtotime('previous year', strtotime($sdate)));
-  $pedate=date('Y-m-d', strtotime('previous year', strtotime($edate)));
- // $pedate=new DateTime($psdate);
- // $pedate->modify("+6 day");
-  $pedate=$pedate->format("Y-m-d");
   $json=array();
   $data1=array();
   $data2=array();
@@ -312,33 +309,22 @@ include("../../common/config.php");
 	  $tpedate=$pedate;
   
   
-   for( $i=0; $i<=$count; $i++)
+   for( $i=0; $i<$emonth; $i++)
    {
     
-	 // increment temp end date 1
-	 // $json['tdate'][$i]=$tsdate;
-	  $tedate = new DateTime($tsdate);
-	  $tedate->modify("+1 day");
-	  $tedate=$tedate->format("Y-m-d");
-	  
-	  // increment temp date 2
-	 // $json['tpdate'][$i]=$tpsdate;
-	  $tpedate = new DateTime($tpsdate);
-	  $tpedate->modify("+1 day");
-	  $tpedate=$tpedate->format("Y-m-d");
 	 
-	 // $tsdate = new DateTime($tdate);
-	 // $tsdate=$tsdate->format("Y-m-d");
 	
 	
+   $monthNum  =$i+1;
+   $dateObj   = DateTime::createFromFormat('!m', $monthNum);
+   $monthName = $dateObj->format('F'); // March
 	
-	
-	$json['label'][$i]=($i+1);
+	$json['label'][$i]=$monthName;
 	
     //Query
 	                    
-	 $aquery = "SELECT DATE_FORMAT(date_added,'%d-%m-%Y') as date,COUNT(*) as count FROM lq_order WHERE tracking='completed' AND date_added BETWEEN '$tsdate' AND '$tedate'";
-     $bquery = "SELECT DATE_FORMAT(date_added,'%d-%m-%Y') as date,COUNT(*) as count FROM lq_order WHERE  tracking='completed' AND  date_added BETWEEN '$tpsdate' AND '$tpedate'";
+	 $aquery = "SELECT COUNT(*) as count FROM lq_order WHERE tracking='completed' AND MONTH(date_added)='$monthNum' AND YEAR(date_added)='$cyear'";
+     $bquery = "SELECT COUNT(*) as count FROM lq_order WHERE  tracking='completed' AND  MONTH(date_added)='$monthNum' AND YEAR(date_added)='$pyear'";
 
  $result1 =mysqli_query($dbConn,$aquery) or die("database error:". mysqli_error($dbConn));
  $result2 =mysqli_query($dbConn,$bquery) or die("database error:". mysqli_error($dbConn)); 	
@@ -354,16 +340,16 @@ include("../../common/config.php");
    $row1 = mysqli_fetch_array($result1, MYSQL_ASSOC);
    $row2 = mysqli_fetch_array($result2, MYSQL_ASSOC);
            
-         $d1=new DateTime($tsdate);
-		 $json['date1'][$i]=$d1->format("d M Y");
+        
+		 $json['date1'][$i]=$monthName+" "+$cyear;
 		 $json['count1'][$i]=$row1['count'];
-		 $d2=new DateTime($tpsdate);
-		 $json['date2'][$i]=$d2->format("d M Y");
+		 
+		 $json['date2'][$i]=$monthName+" "+$pyear;
 		 $json['count2'][$i]=$row2['count'];
     
 	   
-       $json['label1']=$d1->format("M Y");
-	   $json['label2']=$d2->format("M Y");
+       $json['label1']=$cyear;
+	   $json['label2']=$pyear;
        $json['status']="success";
        $json['msg']="Data loaded";
           
@@ -375,20 +361,7 @@ include("../../common/config.php");
        $json['msg']="Data loading failed";
        }
 	   
-	   // increment temp date 1
-	 // $json['tdate'][$i]=$tsdate;
-	  $tdate = new DateTime($tsdate);
-	  $tdate->modify("+1 day");
-	  $tdate=$tdate->format("Y-m-d");
-	  $tsdate=$tdate;
-	  // increment temp date 2
-	 // $json['tpdate'][$i]=$tpsdate;
-	  $tpdate = new DateTime($tpsdate);
-	  $tpdate->modify("+1 day");
-	  $tpdate=$tpdate->format("Y-m-d");
-	  $tpsdate=$tpdate;
-	 // $tsdate = new DateTime($tdate);
-	 // $tsdate=$tsdate->format("Y-m-d");
+
 	
 	   
    }  

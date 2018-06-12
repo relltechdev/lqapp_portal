@@ -45,7 +45,7 @@ include("../../common/config.php");
   
   if($daycheck!="Mon")
   {
-  $sdate=date('Y-m-d', strtotime('next monday', strtotime($sdate)));
+  $sdate=date('Y-m-d', strtotime('previous monday', strtotime($sdate)));
   $edate=new DateTime($sdate);
   $edate->modify("+6 day");
   $edate=$edate->format("Y-m-d");
@@ -120,6 +120,9 @@ include("../../common/config.php");
 	 $aquery = "SELECT DATE_FORMAT(o.date_added,'%d-%m-%Y') as date,ROUND(t.value, 0) as value,COUNT(*) as count FROM lq_order o INNER JOIN lq_order_total t ON (o.order_id=t.order_id) WHERE o.tracking='completed' AND t.code='to_pay' AND o.date_added BETWEEN  '$tsdate' AND '$tedate'";
      $bquery = "SELECT DATE_FORMAT(o.date_added,'%d-%m-%Y') as date,ROUND(t.value, 0) as value,COUNT(*) as count FROM lq_order o INNER JOIN lq_order_total t ON (o.order_id=t.order_id) WHERE o.tracking='completed' AND t.code='to_pay' AND o.date_added BETWEEN  '$tpsdate' AND '$tpedate'";
 
+	// echo $aquery."<br>";
+	// echo $bquery."<br>";
+	 
  $result1 =mysqli_query($dbConn,$aquery) or die("database error:". mysqli_error($dbConn));
  $result2 =mysqli_query($dbConn,$bquery) or die("database error:". mysqli_error($dbConn)); 	
     //Count total number of rows
@@ -225,6 +228,10 @@ include("../../common/config.php");
 	  $tpsdate=$psdate;
 	  $tpedate=$pedate;
   
+   $label1=new DateTime($tsdate);
+   $json['label1']=$label1->format("M Y");
+   $label2=new DateTime($psdate);
+   $json['label2']=$label2->format("M Y");
   
    for( $i=0; $i<=$count; $i++)
    {
@@ -270,14 +277,13 @@ include("../../common/config.php");
            
          $d1=new DateTime($tsdate);
 		 $json['date1'][$i]=$d1->format("d M Y");
-		 $json['revenue1'][$i]=$row1['count'];
+		 $json['revenue1'][$i]=$row1['value'];
 		 $d2=new DateTime($tpsdate);
 		 $json['date2'][$i]=$d2->format("d M Y");
-		 $json['revenue2'][$i]=$row2['count'];
+		 $json['revenue2'][$i]=$row2['value'];
     
 	   
-       $json['label1']=$d1->format("M Y");
-	   $json['label2']=$d2->format("M Y");
+      
        $json['status']="success";
        $json['msg']="Data loaded";
           
@@ -309,6 +315,89 @@ include("../../common/config.php");
 	  
 	  
   }
+  
+  else if($type=="year")
+  {
+	  
+	  
+	$cyear=date("Y",strtotime($sdate));
+	$pyear=date('Y', strtotime('previous year', strtotime($sdate)));
+	$smonth=1;
+	$emonth=12;
+	 
+    
+  $json=array();
+  $data1=array();
+  $data2=array();
+  
+   
+	  //date 2
+	  
+	  $tpsdate=$psdate;
+	  $tpedate=$pedate;
+  
+  
+   for( $i=0; $i<$emonth; $i++)
+   {
+    
+	 
+	
+	
+   $monthNum  =$i+1;
+   $dateObj   = DateTime::createFromFormat('!m', $monthNum);
+   $monthName = $dateObj->format('F'); // March
+	
+	$json['label'][$i]=$monthName;
+	
+    //Query
+	                    
+	 $aquery = "SELECT COUNT(*) as count,SUM(ROUND(t.value, 0)) as value FROM lq_order o INNER JOIN lq_order_total t ON (o.order_id=t.order_id) WHERE o.tracking='completed' AND t.code='to_pay' AND MONTH(o.date_added)='$monthNum' AND YEAR(o.date_added)='$cyear'";
+     $bquery = "SELECT COUNT(*) as count,SUM(ROUND(t.value, 0)) as value FROM lq_order o INNER JOIN lq_order_total t ON (o.order_id=t.order_id) WHERE o.tracking='completed' AND t.code='to_pay' AND MONTH(o.date_added)='$monthNum' AND YEAR(o.date_added)='$pyear'";
+
+ $result1 =mysqli_query($dbConn,$aquery) or die("database error:". mysqli_error($dbConn));
+ $result2 =mysqli_query($dbConn,$bquery) or die("database error:". mysqli_error($dbConn)); 	
+    //Count total number of rows
+     $rowcount1=mysqli_num_rows($result1);
+	 $rowcount2=mysqli_num_rows($result2);
+   
+
+    //Display states list
+    if($rowcount1 > 0 && $rowcount2> 0){
+
+        
+   $row1 = mysqli_fetch_array($result1, MYSQL_ASSOC);
+   $row2 = mysqli_fetch_array($result2, MYSQL_ASSOC);
+           
+        
+		 $json['date1'][$i]=$monthName+" "+$cyear;
+		 $json['revenue1'][$i]=$row1['value'];
+		 
+		 $json['date2'][$i]=$monthName+" "+$pyear;
+		 $json['revenue2'][$i]=$row2['value'];
+    
+	   
+       $json['label1']=$cyear;
+	   $json['label2']=$pyear;
+       $json['status']="success";
+       $json['msg']="Data loaded";
+          
+
+        }
+    else
+	   {
+	    $json["status"]="failed";
+       $json['msg']="Data loading failed";
+       }
+	   
+
+	
+	   
+   }  
+	  
+	  
+	  
+  }
+  
    
   
   
